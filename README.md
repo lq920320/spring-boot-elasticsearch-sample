@@ -42,7 +42,8 @@ elasticsearch的docker官方镜像地址：https://hub.docker.com/_/elasticsearc
 ```
 #### 版本          
 由于spring boot的版本限制，这里我们需要下载的压缩包为elasticsearch-2.4.6.        
-版本对应关系如下（参考：https://github.com/spring-projects/spring-data-elasticsearch/wiki/Spring-Data-Elasticsearch---Spring-Boot---version-matrix），
+版本对应关系如下（参考：
+https://github.com/spring-projects/spring-data-elasticsearch/wiki/Spring-Data-Elasticsearch---Spring-Boot---version-matrix ），
 可根据实际情况下载：          
 
 |Spring Boot Version (x)| Spring Data Elasticsearch Version (y) | Elasticsearch Version (z)| 
