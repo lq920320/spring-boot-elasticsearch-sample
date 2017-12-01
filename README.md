@@ -16,11 +16,11 @@ Elasticsearch在Apache 2 license下许可使用，可以免费下载、使用和
 
 ## 安装ElasticSearch
 
-#### windows 下载安装包
+#### 1.windows 下载安装包
 安装Elasticsearch唯一的要求是安装官方新版的Java，地址：www.java.com           
 你可以从 [elasticsearch.org\/download](https://www.elastic.co/downloads/elasticsearch) 下载最新版本的Elasticsearch。
 
-#### docker 下载官方镜像
+#### 2.docker 下载官方镜像
 docker的安装过程非常简单，只需执行``` docker pull elasticsearch ```命令即可。        
 elasticsearch的docker官方镜像地址：https://hub.docker.com/_/elasticsearch/ ，然后可选择合适的版本进行下载安装。
 
@@ -40,7 +40,7 @@ elasticsearch的docker官方镜像地址：https://hub.docker.com/_/elasticsearc
   "tagline" : "You Know, for Search"
 }
 ```
-#### 版本          
+#### 3.版本          
 由于spring boot的版本限制，这里我们需要下载的压缩包为elasticsearch-2.4.6.        
 版本对应关系如下（参考：
 https://github.com/spring-projects/spring-data-elasticsearch/wiki/Spring-Data-Elasticsearch---Spring-Boot---version-matrix ），
@@ -62,7 +62,7 @@ https://github.com/spring-projects/spring-data-elasticsearch/wiki/Spring-Data-El
 ## spring boot 所需依赖及配置
 
 本项目是用gradle管理的spring-boot项目，在gradle添加依赖：
-```
+```groovy
 compile('org.springframework.boot:spring-boot-starter-data-elasticsearch')
 compile('net.java.dev.jna:jna:4.3.0')
 ```
@@ -72,4 +72,17 @@ compile('net.java.dev.jna:jna:4.3.0')
 spring.data.elasticsearch.properties.host=127.0.0.1
 spring.data.elasticsearch.properties.port=9300
 ```
-## 如何查询
+
+## 相关基础名词
+
+
+## 新增索引
+
+
+## 查询结果
+
+
+## 更新索引
+
+
+## 删除索引
