@@ -24,7 +24,7 @@ Elasticsearch在Apache 2 license下许可使用，可以免费下载、使用和
 docker的安装过程非常简单，只需执行``` docker pull elasticsearch ```命令即可。        
 elasticsearch的docker官方镜像地址：https://hub.docker.com/_/elasticsearch/ ，然后可选择合适的版本进行下载安装。
 
-安装成功访问http://localhost:9200地址可验证是否安装成功：   
+安装成功访问 http://localhost:9200 地址可验证是否安装成功：   
 ```
 {
   "name" : "Maggott",
