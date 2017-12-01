@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
+    <appender name="gelfUdpAppender" class="me.moocar.logbackgelf.GelfUDPAppender">
+        <remoteHost>prod-graylog.myzd.ltd</remoteHost>
+        <port>12201</port>
+        <maxPacketSize>1024</maxPacketSize>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="me.moocar.logbackgelf.GelfLayout">
+                <host>${LOGGING_CONFIG_SOURCE}</host>
+                <fullMessageLayout class="ch.qos.logback.classic.PatternLayout">
+                    <pattern>${FILE_LOG_PATTERN}</pattern>
+                </fullMessageLayout>
+            </layout>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="gelfUdpAppender" />
+    </root>
+</configuration>
