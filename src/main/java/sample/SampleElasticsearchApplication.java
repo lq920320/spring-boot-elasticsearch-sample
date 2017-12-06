@@ -19,6 +19,8 @@ import sample.data.elasticsearch.CustomerRepository;
 /**
  * @author liuqian
  * @date 2017/11/29 9:56.
+ * 添加 EnableElasticsearchRepositories 注解之后，需要elasticsearch服务开启，
+ * 而不加该注解，读取的是本地data文件夹下中的文档保存的内容
  */
 @SpringBootApplication
 @EnableElasticsearchRepositories
