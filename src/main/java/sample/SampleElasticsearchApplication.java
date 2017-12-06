@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 import sample.data.elasticsearch.Customer;
 import sample.data.elasticsearch.CustomerRepository;
 
@@ -20,6 +21,7 @@ import sample.data.elasticsearch.CustomerRepository;
  * @date 2017/11/29 9:56.
  */
 @SpringBootApplication
+@EnableElasticsearchRepositories
 public class SampleElasticsearchApplication implements CommandLineRunner {
 
   private final CustomerRepository repository;
