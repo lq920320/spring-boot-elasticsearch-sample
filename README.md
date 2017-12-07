@@ -167,6 +167,33 @@ private void fetchIndividualCustomers() {
 }
 ```
 ## 更新索引
+更新文档的内容，首先获取实体类，然后更新实体类的值，再进行保存即可：    
+``` Java
+private void fetchIndividualCustomers() {
 
+    System.out.println("Customer found with findByFirstName('Alice'):");
+    System.out.println("--------------------------------");
+    for (Customer customer : this.repository.findByFirstName("Alice")) {
+      System.out.println(customer);
+      if ("Lee".equals(customer.getLastName())) {
+        //更新Lee的firstName 为Michael
+        customer.setFirstName("Michael");
+        this.repository.save(customer);
+      }
+    }
+    for (Customer customer : this.repository.findByFirstName("Alice")) {
+      System.out.println(customer);
+    }
+    System.out.println();
+    System.out.println("Customer found with findByLastName('Lee'):");
+    System.out.println("--------------------------------");
+    for (Customer customer : this.repository.findByLastName("Lee")) {
+      System.out.println(customer);
+    }
+
+    System.out.println();
+}
+```
 
 ## 删除索引
+
