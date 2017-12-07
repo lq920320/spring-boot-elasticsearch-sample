@@ -110,6 +110,13 @@ public interface CustomerRepository extends ElasticsearchRepository<Customer, St
     this.repository.save(new Customer("Alice", "Smith"));
     this.repository.save(new Customer("Bob", "Smith"));
     this.repository.save(new Customer("Alien", "Smith"));
+    this.repository.save(new Customer("Bob", "Jackson"));
+    this.repository.save(new Customer("Alice", "Lee"));
+    this.repository.save(new Customer("钱阿斯端上看的来上的吧", "刘手动加UI沙嗲无诶是卡拉斯科"));
+    this.repository.save(new Customer("阿钱上看的来斯上的端吧", "哈哈哈哈哈"));
+    this.repository.save(new Customer("钱阿斯端上看的来上的吧", "嘻嘻嘻嘻"));
+    this.repository.save(new Customer("钱上阿看的斯端来上的吧", "嘻嘻嘻嘻"));
+    this.repository.save(new Customer("钱上阿看的斯端来上的吧", "刘嘻嘻嘻嘻"));
   }
 ```
 
@@ -165,6 +172,47 @@ private void fetchIndividualCustomers() {
       System.out.println(customer);
     }
 }
+```
+高级搜索，这种方法我们可以定义索引值的权重，通过权重的不同进行排序，权重较高的会出现在靠前的位置：
+``` Java
+private void fetchIndividualCustomers() {
+    String scoreModeSum = "sum";
+    Float minScore = 10.0F;
+    BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
+    Customer contentSearch = new Customer("阿斯端", "刘");
+    if (contentSearch.getFirstName() != null) {
+      boolQuery.must(QueryBuilders.matchPhraseQuery("firstName", contentSearch.getFirstName()));
+    }
+    if (contentSearch.getLastName() != null) {
+      boolQuery.must(QueryBuilders.matchPhraseQuery("lastName", contentSearch.getLastName()));
+    }
+    FunctionScoreQueryBuilder scoreBuilder = QueryBuilders.functionScoreQuery();
+    if (contentSearch.getFirstName() != null) {
+      scoreBuilder.add(QueryBuilders.matchPhraseQuery("firstName", contentSearch.getFirstName()),
+        ScoreFunctionBuilders.weightFactorFunction(1000)).setMinScore(minScore);
+    }
+    if (contentSearch.getLastName() != null) {
+      scoreBuilder.add(QueryBuilders.matchPhraseQuery("lastName", contentSearch.getLastName()),
+        ScoreFunctionBuilders.weightFactorFunction(500)).setMinScore(minScore);
+    }
+    FunctionScoreQueryBuilder functionScoreQueryBuilder = QueryBuilders.functionScoreQuery(scoreBuilder)
+      .scoreMode(scoreModeSum);
+    Page<Customer> customerPage = this.repository.search(new NativeSearchQueryBuilder()
+      .withPageable(pageable)
+      .withQuery(functionScoreQueryBuilder).build());
+    System.out.println(customerPage.getTotalPages());
+    System.out.println(customerPage.getTotalElements());
+    for (Customer customer : customerPage) {
+      System.out.println(customer);
+    }
+  }
+```
+出现的结果首先就应该是firstName最接近“阿斯端”的，然后才是lastName最接近“刘”的，接着再次之：   
+结果如下：   
+```
+Customer[id=AWAvvkHJVKghHAOFc4nW, firstName='钱阿斯端上看的来上的吧', lastName='刘手动加UI沙嗲无诶是卡拉斯科']
+Customer[id=AWAvvkJ6VKghHAOFc4nY, firstName='钱阿斯端上看的来上的吧', lastName='嘻嘻嘻嘻']
+Customer[id=AWAvvkMoVKghHAOFc4na, firstName='钱上阿看的斯端来上的吧', lastName='刘嘻嘻嘻嘻']
 ```
 ## 更新索引
 更新文档的内容，首先获取实体类，然后更新实体类的值，再进行保存即可：    
