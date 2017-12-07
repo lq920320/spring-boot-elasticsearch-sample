@@ -196,4 +196,21 @@ private void fetchIndividualCustomers() {
 ```
 
 ## 删除索引
-
+直接使用delete()方法即可：    
+``` Java
+    System.out.println("Customer found with findByLastName('Lee'):");
+    System.out.println("--------------------------------");
+    for (Customer customer : this.repository.findByLastName("Lee")) {
+      System.out.println(customer);
+      //删除lastName为Lee的顾客
+      this.repository.delete(customer);
+    }
+    System.out.println("--------------------------------");
+    System.out.println("There is no customers who's last name is 'Lee'.");
+    System.out.println("********************************");
+    for (Customer customer : this.repository.findByLastName("Lee")) {
+      System.out.println(customer);
+    }
+    System.out.println("********************************");
+```
+此外，还有delete(String id)等方法，读者可自行尝试。
