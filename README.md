@@ -97,11 +97,75 @@ Elasticsearch集群可以包含多个索引(indices)（数据库），每一个�
       
 
 ## 新增索引
-
+通过调用repository的save()方法即可保存一个实体类，之后便可通过实体类的字段(索引)进行查询、搜索。       
+示例代码如下：       
+```
+public interface CustomerRepository extends ElasticsearchRepository<Customer, String> {
+}
+```
+保存方法：      
+```
+ private final CustomerRepository repository;
+ private void saveCustomers() {
+    this.repository.save(new Customer("Alice", "Smith"));
+    this.repository.save(new Customer("Bob", "Smith"));
+    this.repository.save(new Customer("Alien", "Smith"));
+  }
+```
 
 ## 查询结果
+如下所示，我们在CustomerRepository接口类中定义了两个方法以供调用，并且无需实现：
+``` Java
+public interface CustomerRepository extends ElasticsearchRepository<Customer, String> {
+  /**
+   * 通过名字搜索
+   *
+   * @param firstName
+   * @return
+   */
+  List<Customer> findByFirstName(String firstName);
 
+  /**
+   * 通过姓氏搜索
+   *
+   * @param lastName
+   * @return
+   */
+  List<Customer> findByLastName(String lastName);
+}
+```
+搜索使用：    
+``` Java
+private void fetchIndividualCustomers() {
 
+    System.out.println("Customer found with findByFirstName('Alice'):");
+    System.out.println("--------------------------------");
+    for (Customer customer : this.repository.findByFirstName("Alice")) {
+      System.out.println(customer);
+      if ("Lee".equals(customer.getLastName())) {
+        customer.setFirstName("Michale");
+        this.repository.save(customer);
+      }
+    }
+    for (Customer customer : this.repository.findByFirstName("Alice")) {
+      System.out.println(customer);
+    }
+    System.out.println();
+    System.out.println("Customer found with findByLastName('Lee'):");
+    System.out.println("--------------------------------");
+    for (Customer customer : this.repository.findByLastName("Lee")) {
+      System.out.println(customer);
+    }
+
+    System.out.println();
+    System.out.println("----------------------------------------------");
+    System.out.println("Customers found with findByLastName('Smith'):");
+    System.out.println("--------------------------------");
+    for (Customer customer : this.repository.findByLastName("Smith")) {
+      System.out.println(customer);
+    }
+}
+```
 ## 更新索引
 
 
