@@ -69,7 +69,21 @@ public class SampleElasticsearchApplication implements CommandLineRunner {
     System.out.println("--------------------------------");
     for (Customer customer : this.repository.findByFirstName("Alice")) {
       System.out.println(customer);
+      if ("Lee".equals(customer.getLastName())) {
+        customer.setFirstName("Michale");
+        this.repository.save(customer);
+      }
     }
+    for (Customer customer : this.repository.findByFirstName("Alice")) {
+      System.out.println(customer);
+    }
+    System.out.println();
+    System.out.println("Customer found with findByLastName('Lee'):");
+    System.out.println("--------------------------------");
+    for (Customer customer : this.repository.findByLastName("Lee")) {
+      System.out.println(customer);
+    }
+
     System.out.println();
     System.out.println("----------------------------------------------");
     System.out.println("Customers found with findByLastName('Smith'):");
