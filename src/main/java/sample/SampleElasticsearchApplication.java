@@ -70,7 +70,7 @@ public class SampleElasticsearchApplication implements CommandLineRunner {
     for (Customer customer : this.repository.findByFirstName("Alice")) {
       System.out.println(customer);
       if ("Lee".equals(customer.getLastName())) {
-        customer.setFirstName("Michale");
+        customer.setFirstName("Michael");
         this.repository.save(customer);
       }
     }
@@ -82,7 +82,17 @@ public class SampleElasticsearchApplication implements CommandLineRunner {
     System.out.println("--------------------------------");
     for (Customer customer : this.repository.findByLastName("Lee")) {
       System.out.println(customer);
+      //删除lastName为Lee的顾客
+      this.repository.delete(customer);
     }
+    System.out.println("--------------------------------");
+    System.out.println("There is no customers who's last name is 'Lee'.");
+    System.out.println("********************************");
+    for (Customer customer : this.repository.findByLastName("Lee")) {
+      System.out.println(customer);
+    }
+    System.out.println("********************************");
+
 
     System.out.println();
     System.out.println("----------------------------------------------");
@@ -94,7 +104,7 @@ public class SampleElasticsearchApplication implements CommandLineRunner {
     System.out.println();
     System.out.println("Search pageable: findAll");
     System.out.println("--------------------------------");
-    Pageable pageable = new PageRequest(0, 5);
+    Pageable pageable = new PageRequest(0, 11);
     for (Customer customer : this.repository.findAll(pageable)) {
       System.out.println(customer);
     }
@@ -108,6 +118,7 @@ public class SampleElasticsearchApplication implements CommandLineRunner {
     if (contentSearch.getLastName() != null) {
       boolQuery.must(QueryBuilders.matchPhraseQuery("lastName", contentSearch.getLastName()));
     }
+    contentSearch = new Customer();
     FunctionScoreQueryBuilder scoreBuilder = QueryBuilders.functionScoreQuery();
     if (contentSearch.getFirstName() != null) {
       scoreBuilder.add(QueryBuilders.matchPhraseQuery("firstName", contentSearch.getFirstName()),
