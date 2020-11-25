@@ -42,14 +42,19 @@ elasticsearch的docker官方镜像地址：https://hub.docker.com/_/elasticsearc
 ```
 #### 3.版本          
 由于spring boot的版本限制，这里我们需要下载的压缩包为elasticsearch-2.4.6.        
-版本对应关系如下（参考：
-https://github.com/spring-projects/spring-data-elasticsearch/wiki/Spring-Data-Elasticsearch---Spring-Boot---version-matrix ），
-可根据实际情况下载：          
+版本对应关系如下（参考：https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#preface.versions），
+可根据实际情况下载：
 
-|Spring Boot Version (x)| Spring Data Elasticsearch Version (y) | Elasticsearch Version (z)| 
-|---|---|---|
-| x <= 1.3.5| y <= 1.3.4 | z <= 1.7.2* |
-| x >= 1.4.x| 2.0.0 <=y < 5.0.0** | 2.0.0 <= z < 5.0.0**|
+
+| Spring Data Elasticsearch                                    | Elasticsearch | Spring Boot                                                  |
+| ------------------------------------------------------------ | ------------- | ------------------------------------------------------------ |
+| 4.0.x                                                        | 7.6.2         | 2.3.x                                                        |
+| 3.2.x                                                        | 6.8.12        | 2.2.x                                                        |
+| 3.1.x                                                        | 6.2.2         | 2.1.x                                                        |
+| 3.0.x[[2](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#_footnotedef_2)] | 5.5.0         | 2.0.x[[2](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#_footnotedef_2)] |
+| 2.1.x[[2](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#_footnotedef_2)] | 2.4.0         | 1.5.x[[2](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#_footnotedef_2)] |
+
+
 
 ***
 
